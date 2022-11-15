@@ -1,0 +1,5 @@
+----------Murlipura Application------------
+
+Key Password: vCare@123
+Key Alias: Murlipura
+key Store Password: vCare@123

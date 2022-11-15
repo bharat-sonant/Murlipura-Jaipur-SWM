@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/drawable/gradient.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/drawable/icon_color_change.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/drawable/icon_text_color_change.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/drawable/rectangle.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/activity_city_details.xml" value="0.14444444444444443" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/activity_login_page.xml" value="0.14444444444444443" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/activity_main.xml" value="0.16145833333333334" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/activity_main_screen.xml" value="0.14444444444444443" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/cityselection.xml" value="0.17864583333333334" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/fragment_complain_page.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/fragment_home_page.xml" value="0.165625" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/fragment_location_page.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/layout/fragment_profile_page.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/New Application/CitizenApp/app/src/main/res/menu/bottom.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/drawable-v24/background.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/drawable-v24/border.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/drawable-v24/item.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/font/asul.xml" value="0.18703703703703703" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/activity_form.xml" value="0.14444444444444443" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/activity_login_page.xml" value="0.14444444444444443" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/activity_main_screen.xml" value="0.1" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/activity_new_complain.xml" value="0.165625" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/activity_user_details_page.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/complain_rv_activity.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/complainrvactivity.xml" value="0.17864583333333334" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/fragment_complain_page.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/fragment_home_page.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/fragment_location_page.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/layout/fragment_profile_page.xml" value="0.14444444444444443" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/menu/bottom.xml" value="0.1796875" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.101" />
+        <entry key="..\:/Mritunjay/Projects/Citizen App/CitizenApp/Code/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.101" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

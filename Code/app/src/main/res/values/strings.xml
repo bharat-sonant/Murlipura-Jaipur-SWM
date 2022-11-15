@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Murlipura Jaipur SWM</string>
+    <string name="home">Home</string>
+    <string name="complaints">Complaints</string>
+    <string name="profile">Profile</string>
+    <string name="location">Location</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="enter_card_number">Enter Card Number</string>
+    <string name="your_card_lose">अगर आपका कार्ड खो गया है या आपको अपना कार्ड नंबर नहीं पता है तो फिल फॉर्म बटन दबाएं</string>
+    <string name="if_you_have_lost_your_card_or_don_t_know_your_card_number_then_press_fill_form_button">If you have lost your Card or Don\'t know your card number then press Fill Form Button</string>
+    <string name="please_fill_the_form">Please Fill the Form/कृपया फॉर्म फिल करे</string>
+</resources>
