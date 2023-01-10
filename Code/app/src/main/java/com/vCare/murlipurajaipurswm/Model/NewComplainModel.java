@@ -2,33 +2,52 @@ package com.vCare.murlipurajaipurswm.Model;
 
 public class NewComplainModel {
 
-    String complaintype;
+    String complainType;
     String message;
     String action;
     String date;
     String number;
     String zone;
-    String comlaintnumber;
+    String comlaintNumber;
+    String cardNumber;
+    String name;
 
-    public NewComplainModel() {
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public NewComplainModel(String complaintype, String message, String action, String date, String number, String zone, String comlaintnumber) {
-        this.complaintype = complaintype;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public NewComplainModel(String complainType, String message, String action, String date, String number, String zone, String comlaintNumber, String cardNumber, String name) {
+        this.complainType = complainType;
         this.message = message;
         this.action = action;
         this.date = date;
         this.number = number;
         this.zone = zone;
-        this.comlaintnumber = comlaintnumber;
+        this.comlaintNumber = comlaintNumber;
+        this.cardNumber = cardNumber;
+        this.name = name;
     }
 
-    public String getComplaintype() {
-        return complaintype;
+    public NewComplainModel() {}
+
+    public String getComplainType() {
+        return complainType;
     }
 
-    public void setComplaintype(String complaintype) {
-        this.complaintype = complaintype;
+    public void setComplainType(String complainType) {
+        this.complainType = complainType;
     }
 
     public String getMessage() {
@@ -71,11 +90,11 @@ public class NewComplainModel {
         this.zone = zone;
     }
 
-    public String getComlaintnumber() {
-        return comlaintnumber;
+    public String getComlaintNumber() {
+        return comlaintNumber;
     }
 
-    public void setComlaintnumber(String comlaintnumber) {
-        this.comlaintnumber = comlaintnumber;
+    public void setComlaintNumber(String comlaintNumber) {
+        this.comlaintNumber = comlaintNumber;
     }
 }

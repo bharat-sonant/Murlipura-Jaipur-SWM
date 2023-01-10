@@ -51,39 +51,37 @@ public class Login_Page extends AppCompatActivity {
         dialog.setMessage("Please Wait...");
         dialog.show();
         smartCardNumber = "MPZ" + cardNumber.getText().toString();
-        ref.child("CardWardMapping").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        ref.child("CardWardMapping/" + smartCardNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                SharedPreferences.Editor editor = preferences.edit();
                 if (snapshot.exists()) {
-                    if (snapshot.hasChild(smartCardNumber)) {
-                        editor.putString("CARD NUMBER", smartCardNumber)
-                                .putString("LINE", snapshot.child(smartCardNumber).child("line").getValue().toString())
-                                .putString("WARD", snapshot.child(smartCardNumber).child("ward").getValue().toString())
-                                .putBoolean("LOGIN",true)
-                                .apply();
-                        String token = FirebaseInstanceId.getInstance().getToken();
-                        ref.child("CardWardMapping").child(smartCardNumber).child("Token").setValue(token);
-                        Intent i = new Intent(Login_Page.this, MainScreen.class);
-                        startActivity(i);
-                        dialog.dismiss();
-
-                    } else if (!snapshot.hasChild(smartCardNumber)) {
-                        dialog.dismiss();
-                        new android.app.AlertDialog.Builder(Login_Page.this)
-                                .setTitle("Alert!")
-                                .setMessage("Card Number is not available in our Database")
-                                .setCancelable(false).
-                                setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                }).show();
-                        Log.e("data", "FAILED");
-                    }
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("CARD NUMBER", smartCardNumber)
+                            .putString("LINE", snapshot.child("line").getValue().toString())
+                            .putString("WARD", snapshot.child("ward").getValue().toString())
+                            .putBoolean("LOGIN", true)
+                            .apply();
+                    String token = FirebaseInstanceId.getInstance().getToken();
+                    ref.child("CardWardMapping").child(smartCardNumber).child("Token").setValue(token);
+                    Intent i = new Intent(Login_Page.this, MainScreen.class);
+                    startActivity(i);
+                    dialog.dismiss();
+                } else {
+                    dialog.dismiss();
+                    new android.app.AlertDialog.Builder(Login_Page.this)
+                            .setTitle("Alert!")
+                            .setMessage("Card Number is not available in our Database")
+                            .setCancelable(false).
+                            setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            }).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("ERROR", error.toString());

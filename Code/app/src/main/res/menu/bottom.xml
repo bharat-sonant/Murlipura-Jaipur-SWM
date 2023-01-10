@@ -16,14 +16,10 @@
         android:title="@string/complaints"
         android:icon="@drawable/complaints"/>
 
-    <item
-        android:id="@+id/locationBtn"
-        android:title="@string/location"
-        android:icon="@drawable/location"/>
 
     <item
         android:id="@+id/scanCardData"
-        android:title="Scan Details"
+        android:title="History"
         android:icon="@drawable/time"/>
 
 

@@ -22,18 +22,25 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vCare.murlipurajaipurswm.Model.NewComplainMappingModel;
 import com.vCare.murlipurajaipurswm.Model.NewComplainModel;
 import com.vCare.murlipurajaipurswm.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 public class NewComplain extends Fragment {
@@ -46,6 +53,8 @@ public class NewComplain extends Fragment {
     DatabaseReference ref;
     SharedPreferences preferences;
     ImageView backBtn;
+    String date, month, year;
+    Map<String, Object> map = new HashMap<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -63,6 +72,15 @@ public class NewComplain extends Fragment {
 
         database = FirebaseDatabase.getInstance(preferences.getString("PATH", ""));
         ref = database.getReference();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        date = dateFormat.format(new Date());
+        try {
+            year = new SimpleDateFormat("yyyy").format(dateFormat.parse(date));
+            month = new SimpleDateFormat("MMMM", Locale.US).format(dateFormat.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         getComplainType();
 
@@ -95,17 +113,26 @@ public class NewComplain extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                NewComplainModel model = new NewComplainModel();
-                model.setMessage(messageET.getText().toString());
-                model.setDate(date);
-                model.setComplaintype(spinner.getSelectedItem().toString());
-                model.setComlaintnumber(String.valueOf(new Random().nextInt(10000000)));
-                model.setNumber(preferences.getString("MOBILE",""));
-                model.setZone(preferences.getString("WARD",""));
-                model.setAction("1");
 
-                ref.child("ComplaintRequest").push().setValue(model);
+                map.put("complaintType",spinner.getSelectedItem().toString());
+                map.put("message", messageET.getText().toString());
+                map.put("registerBy","CitizenApp");
+                map.put("status","1");
+
+                ref.child("ComplaintsData").child("Complaints").child(preferences.getString("WARD",""))
+                        .child(year).child(month).child(date)
+                        .child(preferences.getString("CARD NUMBER","")).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                setCount();
+                                setMapping();
+                            }
+                        });
+
+                ref.child("ComplaintsData").child("UserComplaintReference")
+                        .child(preferences.getString("CARD NUMBER", ""))
+                        .child(date)
+                        .setValue(preferences.getString("WARD", "") + "/" + year + "/" + month + "/" + date + "/" + preferences.getString("CARD NUMBER", ""));
 
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.contains, new ComplainPage()).commit();
             }
@@ -114,6 +141,41 @@ public class NewComplain extends Fragment {
         AlertDialog dialog = builder.create();
         if (!getActivity().isFinishing())
             dialog.show();
+    }
+
+    private void setMapping() {
+        NewComplainMappingModel model = new NewComplainMappingModel();
+        model.setCard(preferences.getString("CARD NUMBER",""));
+        model.setComplaintDataPath(preferences.getString("WARD","") + "/" + year + "/" + month + "/" + date + "/" + preferences.getString("CARD NUMBER",""));
+        model.setDate(date);
+        model.setComplaintSource("CitizenApp");
+
+        ref.child("ComplaintsData").child("ComplaintsMapping").child("Open").child(preferences.getString("WARD","")).push().setValue(model);
+    }
+
+    private void setCount() {
+        ref.child("ComplaintsData/CountSummary/StatusWise/Open").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int count = 0;
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (Objects.equals(data.getKey(), preferences.getString("WARD",""))) {
+                            count = Integer.parseInt(data.getValue() + "");
+                        }
+                    }
+                    count++;
+                    ref.child("ComplaintsData").child("CountSummary").child("StatusWise").child("Open").child(preferences.getString("WARD","")).setValue(count);
+                } else {
+                    ref.child("ComplaintsData").child("CountSummary").child("StatusWise").child("Open").child(preferences.getString("WARD","")).setValue("1");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private boolean isTrue() {
