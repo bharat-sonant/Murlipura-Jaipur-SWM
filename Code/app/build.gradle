@@ -10,8 +10,8 @@ android {
         applicationId "com.vCare.murlipurajaipurswm"
         minSdk 21
         targetSdk 32
-        versionCode 5
-        versionName "1.0.0.4"
+        versionCode 6
+        versionName "1.0.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,5 +64,12 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.6.0'
     //noinspection GradleDependency,GradleDependency,GradleDynamicVersion
     implementation 'com.google.maps.android:android-maps-utils:2.4.0'
+
+
+    //Firebase Authentication
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    // Add the dependency for the Firebase Authentication library
+    implementation 'com.google.firebase:firebase-auth'
 
 }

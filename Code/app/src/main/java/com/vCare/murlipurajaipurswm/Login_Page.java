@@ -62,9 +62,7 @@ public class Login_Page extends AppCompatActivity {
                             .putString("WARD", snapshot.child("ward").getValue().toString())
                             .putBoolean("LOGIN", true)
                             .apply();
-                    String token = FirebaseInstanceId.getInstance().getToken();
-                    ref.child("CardWardMapping").child(smartCardNumber).child("Token").setValue(token);
-                    Intent i = new Intent(Login_Page.this, MainScreen.class);
+                    Intent i = new Intent(Login_Page.this, OtpScreen.class);
                     startActivity(i);
                     dialog.dismiss();
                 } else {

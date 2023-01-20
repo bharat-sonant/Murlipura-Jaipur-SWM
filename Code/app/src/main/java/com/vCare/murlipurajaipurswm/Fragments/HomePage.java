@@ -69,12 +69,11 @@ public class HomePage extends Fragment {
         helperName = view.findViewById(R.id.helperName);
 //        helperNumber = view.findViewById(R.id.helperNumber);
         supervisorContact = view.findViewById(R.id.supervisorContact);
-        userName = view.findViewById(R.id.userName);
         customerCare = view.findViewById(R.id.customerCare);
         logoutBtn = view.findViewById(R.id.logoutBtn);
 
         // get User Name
-        getUserName();
+//        getUserName();
 
         // get Driver and Helper Details
         getDetails();
@@ -194,6 +193,7 @@ public class HomePage extends Fragment {
                                         .load(url)
                                         .error("ERROR")
                                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                                        .placeholder(R.drawable.man)
                                         .into(driverImg);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -223,6 +223,7 @@ public class HomePage extends Fragment {
                                         .load(url)
                                         .error("ERROR")
                                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                                        .placeholder(R.drawable.man)
                                         .into(helperImg);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -258,33 +259,33 @@ public class HomePage extends Fragment {
         spannable.setSpan(new ForegroundColorSpan(Color.BLACK),0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-    private void helperCall() {
-        helperNumber.setMovementMethod(LinkMovementMethod.getInstance());
-        helperNumber.setText(helperNumber.getText().toString(), TextView.BufferType.SPANNABLE);
-        Spannable spannable = (Spannable) helperNumber.getText();
-        final ClickableSpan myClick = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View view) {
-                phoneCall(preferences.getString("HELPER NUMBER",""));
-            }
-        };
-        spannable.setSpan(myClick,0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannable.setSpan(new ForegroundColorSpan(Color.BLUE),0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }
+//    private void helperCall() {
+//        helperNumber.setMovementMethod(LinkMovementMethod.getInstance());
+//        helperNumber.setText(helperNumber.getText().toString(), TextView.BufferType.SPANNABLE);
+//        Spannable spannable = (Spannable) helperNumber.getText();
+//        final ClickableSpan myClick = new ClickableSpan() {
+//            @Override
+//            public void onClick(@NonNull View view) {
+//                phoneCall(preferences.getString("HELPER NUMBER",""));
+//            }
+//        };
+//        spannable.setSpan(myClick,0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        spannable.setSpan(new ForegroundColorSpan(Color.BLUE),0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//    }
 
-    private void driverCall() {
-        driverNumber.setMovementMethod(LinkMovementMethod.getInstance());
-        driverNumber.setText(driverNumber.getText().toString(), TextView.BufferType.SPANNABLE);
-        Spannable spannable = (Spannable) driverNumber.getText();
-        final ClickableSpan myClick = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View view) {
-                phoneCall(preferences.getString("DRIVER NUMBER",""));
-            }
-        };
-        spannable.setSpan(myClick,0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannable.setSpan(new ForegroundColorSpan(Color.BLUE),0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }
+//    private void driverCall() {
+//        driverNumber.setMovementMethod(LinkMovementMethod.getInstance());
+//        driverNumber.setText(driverNumber.getText().toString(), TextView.BufferType.SPANNABLE);
+//        Spannable spannable = (Spannable) driverNumber.getText();
+//        final ClickableSpan myClick = new ClickableSpan() {
+//            @Override
+//            public void onClick(@NonNull View view) {
+//                phoneCall(preferences.getString("DRIVER NUMBER",""));
+//            }
+//        };
+//        spannable.setSpan(myClick,0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        spannable.setSpan(new ForegroundColorSpan(Color.BLUE),0,10,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//    }
 
     private void phoneCall(String number) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -298,33 +299,33 @@ public class HomePage extends Fragment {
         }
     }
 
-    private void getUserName() {
-        getDataBase();
-
-        ref.child("Houses/" + preferences.getString("WARD", "") + "/" + preferences.getString("LINE", "") + "/" + preferences.getString("CARD NUMBER", "")).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String name = snapshot.child("name").getValue(String.class);
-                String mobile = snapshot.child("mobile").getValue(String.class);
-
-                if (!preferences.getString("NAME", "").isEmpty()) {
-                    Log.e("data", "SUCCESS");
-                    userName.setText(preferences.getString("NAME", ""));
-                } else {
-                    Log.e("data", "FAILED");
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("NAME", name).putString("MOBILE", mobile).apply();
-                    userName.setText(name);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "ERROR:getUserName: " + error, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void getUserName() {
+//        getDataBase();
+//
+//        ref.child("Houses/" + preferences.getString("WARD", "") + "/" + preferences.getString("LINE", "") + "/" + preferences.getString("CARD NUMBER", "")).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                String name = snapshot.child("name").getValue(String.class);
+//                String mobile = snapshot.child("mobile").getValue(String.class);
+//
+//                if (!preferences.getString("NAME", "").isEmpty()) {
+//                    Log.e("data", "SUCCESS");
+//                    userName.setText(preferences.getString("NAME", ""));
+//                } else {
+//                    Log.e("data", "FAILED");
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putString("NAME", name).putString("MOBILE", mobile).apply();
+//                    userName.setText(name);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getContext(), "ERROR:getUserName: " + error, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
 
 }

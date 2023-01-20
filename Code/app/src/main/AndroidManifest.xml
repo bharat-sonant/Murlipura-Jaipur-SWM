@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        tools:ignore="ManifestOrder" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,19 +22,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CitizenApp"
         tools:targetApi="31">
-
         <activity
-            android:name="com.vCare.murlipurajaipurswm.FormActivity"
+            android:name=".OtpScreen"
             android:exported="false" />
         <activity
-            android:name="com.vCare.murlipurajaipurswm.MainScreen"
+            android:name=".FormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainScreen"
             android:exported="true" />
         <activity
-            android:name="com.vCare.murlipurajaipurswm.Login_Page"
+            android:name=".Login_Page"
             android:exported="false" />
-
         <activity
-            android:name="com.vCare.murlipurajaipurswm.SplashScreen"
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +47,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDOO1-sUDVCQni5JYRtANw2BWnXkp9MnM4" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/vcarelogo" />
@@ -47,10 +57,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name="com.vCare.murlipurajaipurswm.MyServices" />
-
+        <service android:name=".MyServices" />
         <service
-            android:name="com.vCare.murlipurajaipurswm.Notification"
+            android:name=".Notification"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -59,12 +68,4 @@
         </service>
     </application>
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"
-        tools:ignore="ManifestOrder" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
 </manifest>

@@ -45,19 +45,33 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:background="@drawable/strokes"
             app:layout_constraintTop_toBottomOf="@+id/toolbarNewComplain"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tint="#4D000000"
+            android:paddingEnd="25dp"
+            android:src="@drawable/ic_baseline_arrow_drop_down_24"
+            app:layout_constraintTop_toTopOf="@id/spinner"
+            app:layout_constraintBottom_toBottomOf="@id/spinner"
+            app:layout_constraintEnd_toEndOf="@id/spinner"/>
+
         <EditText
             android:id="@+id/messageET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="130dp"
             android:padding="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:hint="Enter Message"
+            android:gravity="top|left"
+            android:maxLength="200"
+            android:maxLines="5"
             android:inputType="text|textMultiLine"
             android:background="@drawable/background"
             app:layout_constraintTop_toBottomOf="@id/spinner"/>

@@ -33,10 +33,9 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ComplainAdapter.ViewHolder holder, int position) {
-
         ComplainModel count = models.get(position);
 
-        holder.att_sno.setText(count.getSno());
+        holder.message.setText(count.getmessage());
         holder.att_date.setText(count.getDate());
         holder.att_type.setText(count.getType());
 
@@ -59,14 +58,14 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView att_sno;
+        private final TextView message;
         private final TextView att_date;
         private final TextView att_type;
         private final TextView att_action;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            att_sno = itemView.findViewById(R.id.att_sno);
+            message = itemView.findViewById(R.id.message);
             att_date = itemView.findViewById(R.id.att_date);
             att_type = itemView.findViewById(R.id.att_type);
             att_action = itemView.findViewById(R.id.att_action);

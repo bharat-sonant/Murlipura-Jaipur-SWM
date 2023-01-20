@@ -2,24 +2,26 @@ package com.vCare.murlipurajaipurswm.Model;
 
 public class ComplainModel {
 
-    public String sno;
+    public String message;
     public String date;
     public String type;
     public String status;
 
-    public ComplainModel(String sno, String date, String type, String status) {
-        this.sno = sno;
+    public ComplainModel(){}
+
+    public ComplainModel(String message, String date, String type, String status) {
+        this.message = message;
         this.date = date;
         this.type = type;
         this.status = status;
     }
 
-    public String getSno() {
-        return sno;
+    public String getmessage() {
+        return message;
     }
 
-    public void setSno(String sno) {
-        this.sno = sno;
+    public void setmessage(String message) {
+        this.message = message;
     }
 
     public String getDate() {

@@ -104,12 +104,10 @@ public class ComplainPage extends Fragment {
 
             }
         });
-        linearLayout.setVisibility(View.INVISIBLE);
     }
 
     private void showData(String pathRef, String dateValues) {
         models.clear();
-        i = 1;
         ref.child("ComplaintsData").child("Complaints").child(pathRef).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint({"SimpleDateFormat", "NotifyDataSetChanged"})
             @Override
@@ -118,6 +116,7 @@ public class ComplainPage extends Fragment {
                     String date = dateValues;
                     String complainType = snapshot.child("complaintType").getValue(String.class);
                     String status = snapshot.child("status").getValue(String.class);
+                    String message = snapshot.child("message").getValue(String.class);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     try {
                         Date date1 = simpleDateFormat.parse(date);
@@ -126,9 +125,7 @@ public class ComplainPage extends Fragment {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    linearLayout.setVisibility(View.VISIBLE);
-                    models.add(new ComplainModel(String.valueOf(i), date, complainType, status));
-                    i++;
+                    models.add(new ComplainModel(message, date, complainType, status));
                 }
                 adapter = new ComplainAdapter(getActivity(), models);
                 complainRV.setAdapter(adapter);
