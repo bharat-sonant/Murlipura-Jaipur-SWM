@@ -37,7 +37,7 @@ public class Login_Page extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
 
         preferences = getSharedPreferences("CITIZEN APP", MODE_PRIVATE);
-        database = FirebaseDatabase.getInstance(preferences.getString("PATH",""));
+        database = FirebaseDatabase.getInstance(preferences.getString("PATH", ""));
         ref = database.getReference();
 
         loginBtn.setOnClickListener(view -> {
@@ -60,7 +60,6 @@ public class Login_Page extends AppCompatActivity {
                     editor.putString("CARD NUMBER", smartCardNumber)
                             .putString("LINE", snapshot.child("line").getValue().toString())
                             .putString("WARD", snapshot.child("ward").getValue().toString())
-                            .putBoolean("LOGIN", true)
                             .apply();
                     Intent i = new Intent(Login_Page.this, OtpScreen.class);
                     startActivity(i);
