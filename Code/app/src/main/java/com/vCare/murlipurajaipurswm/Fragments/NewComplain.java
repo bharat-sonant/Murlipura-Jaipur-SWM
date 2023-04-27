@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -56,6 +57,19 @@ public class NewComplain extends Fragment {
     String date, month, year;
     Map<String, Object> map = new HashMap<>();
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.contains, new ComplainPage()).commit();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,7 +114,7 @@ public class NewComplain extends Fragment {
             }
         });
 
-        return  view;
+        return view;
     }
 
 
@@ -114,14 +128,14 @@ public class NewComplain extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
-                map.put("complaintType",spinner.getSelectedItem().toString());
+                map.put("complaintType", spinner.getSelectedItem().toString());
                 map.put("message", messageET.getText().toString());
-                map.put("registerBy","CitizenApp");
-                map.put("status","1");
+                map.put("registerBy", "CitizenApp");
+                map.put("status", "1");
 
-                ref.child("ComplaintsData").child("Complaints").child(preferences.getString("WARD",""))
+                ref.child("ComplaintsData").child("Complaints").child(preferences.getString("WARD", ""))
                         .child(year).child(month).child(date)
-                        .child(preferences.getString("CARD NUMBER","")).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        .child(preferences.getString("CARD NUMBER", "")).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
 //                                setCount();
@@ -145,12 +159,12 @@ public class NewComplain extends Fragment {
 
     private void setMapping() {
         NewComplainMappingModel model = new NewComplainMappingModel();
-        model.setCard(preferences.getString("CARD NUMBER",""));
-        model.setComplaintDataPath(preferences.getString("WARD","") + "/" + year + "/" + month + "/" + date + "/" + preferences.getString("CARD NUMBER",""));
+        model.setCard(preferences.getString("CARD NUMBER", ""));
+        model.setComplaintDataPath(preferences.getString("WARD", "") + "/" + year + "/" + month + "/" + date + "/" + preferences.getString("CARD NUMBER", ""));
         model.setDate(date);
         model.setComplaintSource("CitizenApp");
 
-        ref.child("ComplaintsData").child("ComplaintsMapping").child("Open").child(preferences.getString("WARD","")).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+        ref.child("ComplaintsData").child("ComplaintsMapping").child("Open").child(preferences.getString("WARD", "")).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 setCount();
@@ -165,14 +179,14 @@ public class NewComplain extends Fragment {
                 if (dataSnapshot.exists()) {
                     int count = 0;
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        if (Objects.equals(data.getKey(), preferences.getString("WARD",""))) {
+                        if (Objects.equals(data.getKey(), preferences.getString("WARD", ""))) {
                             count = Integer.parseInt(data.getValue() + "");
                         }
                     }
                     count++;
-                    ref.child("ComplaintsData").child("CountSummary").child("StatusWise").child("Open").child(preferences.getString("WARD","")).setValue(count);
+                    ref.child("ComplaintsData").child("CountSummary").child("StatusWise").child("Open").child(preferences.getString("WARD", "")).setValue(count);
                 } else {
-                    ref.child("ComplaintsData").child("CountSummary").child("StatusWise").child("Open").child(preferences.getString("WARD","")).setValue("1");
+                    ref.child("ComplaintsData").child("CountSummary").child("StatusWise").child("Open").child(preferences.getString("WARD", "")).setValue("1");
                 }
             }
 

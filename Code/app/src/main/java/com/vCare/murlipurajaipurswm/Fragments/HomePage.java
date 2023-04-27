@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -55,6 +56,7 @@ public class HomePage extends Fragment {
     FirebaseDatabase database;
     SharedPreferences preferences;
     AlertDialog.Builder ad;
+    ConstraintLayout btn_pay_history;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -71,6 +73,7 @@ public class HomePage extends Fragment {
         supervisorContact = view.findViewById(R.id.supervisorContact);
         customerCare = view.findViewById(R.id.customerCare);
         logoutBtn = view.findViewById(R.id.logoutBtn);
+        btn_pay_history = view.findViewById(R.id.btn_pay_history);
 
         // get User Name
 //        getUserName();
@@ -122,6 +125,14 @@ public class HomePage extends Fragment {
                     }
                 });
                 ad.show();
+            }
+        });
+
+        btn_pay_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contains, new PaymentHistory()).commit();
             }
         });
 
