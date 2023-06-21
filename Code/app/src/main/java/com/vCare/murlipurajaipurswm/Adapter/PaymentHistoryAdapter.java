@@ -38,11 +38,23 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PaymentHistoryModel modelPosition = models.get(position);
 
-        holder.tv_date.setText("Date: "+modelPosition.getTransactionDateTime());
-        holder.tv_payMethod.setText("Via: "+modelPosition.getPayMethod());
-        holder.tv_amount.setText("Amount: ₹"+modelPosition.getTransactionAmount());
-        holder.tv_orderId.setText("OrderId: "+modelPosition.getRetrievalReferenceNo());
-        holder.tv_collectorId.setText("Collected By: "+modelPosition.getpaymentCollectionByName());
+        holder.tv_date.setText("Transaction Date: "+modelPosition.getTransactionDateTime());
+        holder.tv_payMethod.setText("Pay Method: "+modelPosition.getPayMethod());
+        holder.tv_amount.setText("Transaction Amount: ₹"+modelPosition.getTransactionAmount());
+        holder.tv_orderId.setText("Order Id: "+modelPosition.getRetrievalReferenceNo());
+        holder.tv_collectorId.setText("Collected Name: "+modelPosition.getpaymentCollectionByName());
+        holder.tvStatus.setText("Status: "+modelPosition.getStatus());
+        holder.tvPaidMonthYaer.setText("Paid Month Year: "+modelPosition.getPaidMonthYear());
+        if (modelPosition.getStatus().equals("Declined")){
+            holder.tvDeclineReason.setVisibility(View.VISIBLE);
+            holder.tvDeclineReason.setText("Declined Reason: "+modelPosition.getDeclineReason());
+        }else {
+            holder.tvDeclineReason.setVisibility(View.GONE);
+        }
+        if (modelPosition.getStatus().equals("Pending")){
+            holder.tvDeclineReason.setVisibility(View.GONE);
+            holder.tvDeclineReason.setText("Declined Reason: "+modelPosition.getDeclineReason());
+        }
     }
 
     @Override
@@ -56,7 +68,9 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
         private final TextView tv_amount;
         private final TextView tv_orderId;
         private final TextView tv_collectorId;
-
+        private TextView tvStatus;
+        private  TextView tvPaidMonthYaer;
+        private  TextView tvDeclineReason;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +79,9 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
             tv_amount = itemView.findViewById(R.id.tv_amount);
             tv_orderId = itemView.findViewById(R.id.tv_orderId);
             tv_collectorId = itemView.findViewById(R.id.tv_collectorId);
+            tvStatus = itemView.findViewById(R.id.tv_status);
+            tvPaidMonthYaer = itemView.findViewById(R.id.tv_paidMonthYear);
+            tvDeclineReason = itemView.findViewById(R.id.tv_declineReason);
         }
     }
 }

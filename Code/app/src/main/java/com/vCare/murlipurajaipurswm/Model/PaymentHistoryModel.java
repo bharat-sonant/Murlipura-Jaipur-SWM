@@ -7,7 +7,9 @@ public class PaymentHistoryModel {
     String paymentCollectionByName;
     String payMethod;
     String merchantTransactionId;
-
+    String Status;
+    String paidMonthYear;
+    String declineReason;
     public String getTransactionDateTime() {
         return transactionDateTime;
     }
@@ -56,15 +58,30 @@ public class PaymentHistoryModel {
         this.merchantTransactionId = merchantTransactionId;
     }
 
+    public String getPaidMonthYear() {
+        return paidMonthYear;
+    }
+
+    public String getDeclineReason() {
+        return declineReason;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
     public PaymentHistoryModel() {
     }
 
-    public PaymentHistoryModel(String transactionDateTime, String transactionAmount, String retrievalReferenceNo, String paymentCollectionByName, String payMethod, String merchantTransactionId) {
+    public PaymentHistoryModel(String transactionDateTime, String transactionAmount, String retrievalReferenceNo, String paymentCollectionByName, String payMethod, String merchantTransactionId,String status,String paidMonthYear,String declineReason) {
         this.transactionDateTime = transactionDateTime;
         this.transactionAmount = transactionAmount;
         this.retrievalReferenceNo = retrievalReferenceNo;
         this.paymentCollectionByName = paymentCollectionByName;
         this.payMethod = payMethod;
         this.merchantTransactionId = merchantTransactionId;
+        this.Status = status;
+        this.paidMonthYear = paidMonthYear;
+        this.declineReason = declineReason;
     }
 }

@@ -3,6 +3,7 @@ package com.vCare.murlipurajaipurswm.Fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,8 @@ public class PaymentHistory extends Fragment {
     SharedPreferences preferences;
     ArrayList<PaymentHistoryModel> paymentModel = new ArrayList<>();
     ImageView back_btn;
-
+    String chequeStatus;
+    String declinedReason;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +107,8 @@ public class PaymentHistory extends Fragment {
                                                     String paymentCollectionByName = dataSnap.child("paymentCollectionByName").getValue(String.class);
                                                     String payMethod = dataSnap.child("payMethod").getValue(String.class);
                                                     String merchantTransactionId = dataSnap.child("merchantTransactionId").getValue(String.class);
-                                                    paymentModel.add(new PaymentHistoryModel(transactionDateTime, transactionAmount, retrievalReferenceNo, paymentCollectionByName, payMethod, merchantTransactionId));
+                                                    String paidMonthYear = dataSnap.child("monthYear").getValue(String.class);
+                                                    paymentModel.add(new PaymentHistoryModel(transactionDateTime, transactionAmount, retrievalReferenceNo, paymentCollectionByName, payMethod, merchantTransactionId,"Paid", paidMonthYear, ""));
                                                 }
                                             }
                                         }
@@ -119,8 +122,8 @@ public class PaymentHistory extends Fragment {
                     historyAdapter = new PaymentHistoryAdapter(getActivity(), paymentModel);
                     paymentHisRcy.setAdapter(historyAdapter);
                 } else {
-                    tv_noData.setVisibility(View.VISIBLE);
-                    progress_bar.setVisibility(View.GONE);
+//                    tv_noData.setVisibility(View.VISIBLE);
+//                    progress_bar.setVisibility(View.GONE);
                 }
             }
 
@@ -129,6 +132,57 @@ public class PaymentHistory extends Fragment {
 
             }
         });
+
+        ref.child("PaymentCollectionInfo/PaymentViaCheque/" + preferences.getString("CARD NUMBER", "")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e("VCare", " Cheque " + snapshot.toString());
+                if (snapshot.getValue() != null) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        Log.e("VCare", " Cheque " + snapshot1.toString());
+                        Log.e("VCare", " Cheque key" + snapshot1.getKey());
+                        for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                            Log.e("VCare", " Cheque " + snapshot2.toString());
+                            Log.e("VCare", " Cheque key" + snapshot2.getKey());
+                            Log.e("VCare", " Cheque key" + snapshot2.child("monthYear").getValue().toString());
+                            if (snapshot2.hasChild("monthYear")) {
+                                chequeStatus = snapshot2.child("status").getValue().toString();
+                                if (chequeStatus.equals("Pending") || chequeStatus.equals("Declined")) {
+                                    String merchantTransactionId = snapshot2.child("merchantTransactionId").getValue().toString();
+                                    String transactionDateTime = snapshot2.child("collectedDate").getValue().toString();
+                                    String transactionAmount = snapshot2.child("amount").getValue().toString();
+                                    String payMethod = "By Cheque";
+                                    String paidMonthYear = snapshot2.child("monthYear").getValue().toString();
+                                    String paymentCollectionByName = snapshot2.child("collectedByName").getValue().toString();
+                                    if (snapshot2.hasChild("declinedReason")) {
+                                        declinedReason = snapshot2.child("declinedReason").getValue().toString();
+                                    }
+                                    paymentModel.add(new PaymentHistoryModel(transactionDateTime, transactionAmount, "", paymentCollectionByName, payMethod, merchantTransactionId, chequeStatus, paidMonthYear, declinedReason));
+                                }
+                            }
+                        }
+                    }
+                    paymentHisRcy.setVisibility(View.VISIBLE);
+                    progress_bar.setVisibility(View.GONE);
+                    historyAdapter = new PaymentHistoryAdapter(getActivity(), paymentModel);
+                    paymentHisRcy.setAdapter(historyAdapter);
+                    if (paymentModel.size() == 0) {
+                        tv_noData.setVisibility(View.VISIBLE);
+                        progress_bar.setVisibility(View.GONE);
+                    }else {
+                        tv_noData.setVisibility(View.GONE);
+                        progress_bar.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
 }
