@@ -50,7 +50,7 @@ public class Login_Page extends AppCompatActivity {
         ProgressDialog dialog = new ProgressDialog(Login_Page.this);
         dialog.setMessage("Please Wait...");
         dialog.show();
-        smartCardNumber = "MNZ" + cardNumber.getText().toString();
+        smartCardNumber = "MPZ" + cardNumber.getText().toString();
 
         ref.child("CardWardMapping/" + smartCardNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

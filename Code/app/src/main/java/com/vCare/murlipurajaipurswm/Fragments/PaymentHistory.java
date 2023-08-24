@@ -40,6 +40,7 @@ public class PaymentHistory extends Fragment {
     ImageView back_btn;
     String chequeStatus;
     String declinedReason;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class PaymentHistory extends Fragment {
                         .replace(R.id.contains, new HomePage()).commit();
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this,callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class PaymentHistory extends Fragment {
                                                     String payMethod = dataSnap.child("payMethod").getValue(String.class);
                                                     String merchantTransactionId = dataSnap.child("merchantTransactionId").getValue(String.class);
                                                     String paidMonthYear = dataSnap.child("monthYear").getValue(String.class);
-                                                    paymentModel.add(new PaymentHistoryModel(transactionDateTime, transactionAmount, retrievalReferenceNo, paymentCollectionByName, payMethod, merchantTransactionId,"Paid", paidMonthYear, ""));
+                                                    paymentModel.add(new PaymentHistoryModel(transactionDateTime, transactionAmount, retrievalReferenceNo, paymentCollectionByName, payMethod, merchantTransactionId, "Paid", paidMonthYear, ""));
                                                 }
                                             }
                                         }
@@ -122,8 +123,7 @@ public class PaymentHistory extends Fragment {
                     historyAdapter = new PaymentHistoryAdapter(getActivity(), paymentModel);
                     paymentHisRcy.setAdapter(historyAdapter);
                 } else {
-//                    tv_noData.setVisibility(View.VISIBLE);
-//                    progress_bar.setVisibility(View.GONE);
+                    progress_bar.setVisibility(View.GONE);
                 }
             }
 
@@ -166,10 +166,12 @@ public class PaymentHistory extends Fragment {
                     progress_bar.setVisibility(View.GONE);
                     historyAdapter = new PaymentHistoryAdapter(getActivity(), paymentModel);
                     paymentHisRcy.setAdapter(historyAdapter);
+
+                } else {
                     if (paymentModel.size() == 0) {
                         tv_noData.setVisibility(View.VISIBLE);
                         progress_bar.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         tv_noData.setVisibility(View.GONE);
                         progress_bar.setVisibility(View.GONE);
                     }
