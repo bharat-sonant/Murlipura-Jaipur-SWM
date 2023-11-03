@@ -63,6 +63,7 @@ public class Login_Page extends AppCompatActivity {
                             .apply();
                     Intent i = new Intent(Login_Page.this, OtpScreen.class);
                     startActivity(i);
+                    finish();
                     dialog.dismiss();
                 } else {
                     dialog.dismiss();

@@ -15,7 +15,6 @@ import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +115,10 @@ public class HomePage extends Fragment {
                         SharedPreferences.Editor edit = preferences.edit();
                         edit.clear().apply();
                         Intent intent = new Intent(getActivity(), SplashScreen.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        getActivity().finish();
+
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -131,8 +133,11 @@ public class HomePage extends Fragment {
         btn_pay_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                requireActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.contains, new PaymentHistory()).commit();
+
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contains, new PaymentHistory()).commit();
+                        .replace(R.id.contains, new PaymentHistoryFragment()).commit();
             }
         });
 

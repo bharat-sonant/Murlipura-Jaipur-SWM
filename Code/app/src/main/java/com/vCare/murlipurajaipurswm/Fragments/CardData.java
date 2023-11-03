@@ -1,6 +1,8 @@
 package com.vCare.murlipurajaipurswm.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vCare.murlipurajaipurswm.Adapter.CardDataAdapter;
 import com.vCare.murlipurajaipurswm.Model.ScanCardDataModel;
+import com.vCare.murlipurajaipurswm.OtpScreen;
 import com.vCare.murlipurajaipurswm.R;
 
 import java.text.ParseException;
@@ -35,6 +38,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Random;
 
 public class CardData extends Fragment {
@@ -51,6 +55,7 @@ public class CardData extends Fragment {
     String year, month;
     ArrayList<ScanCardDataModel> arrayList = new ArrayList<>();
     String list;
+    ProgressDialog dialog;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -85,13 +90,14 @@ public class CardData extends Fragment {
     }
 
     private void dataBase() {
-        preferences = getActivity().getSharedPreferences("CITIZEN APP", Context.MODE_PRIVATE);
+        preferences = requireActivity().getSharedPreferences("CITIZEN APP", Context.MODE_PRIVATE);
         ref = FirebaseDatabase.getInstance(preferences.getString("PATH", "")).getReference();
     }
 
 
     @SuppressLint("NewApi")
     private void getScanData() {
+        setProgressBar("","Please Wait", getContext(),getActivity());
         dataBase();
         fullMonthDate.clear();
         String monthSet = month;
@@ -191,6 +197,7 @@ public class CardData extends Fragment {
                 scanCardRv.setVisibility(View.VISIBLE);
                 CardDataAdapter cardDataAdapter = new CardDataAdapter(getActivity(), arrayList);
                 scanCardRv.setAdapter(cardDataAdapter);
+                closeDialog(getActivity());
             }
 
             @Override
@@ -379,6 +386,29 @@ public class CardData extends Fragment {
 
             }
         });
+    }
+
+    public void setProgressBar(String title, String message, Context context, Activity activity) {
+        closeDialog(activity);
+        dialog = new ProgressDialog(context);
+        dialog.setCancelable(false);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        if (!dialog.isShowing() && !activity.isFinishing()) {
+            dialog.show();
+        }
+    }
+
+    public void closeDialog(Activity activity) {
+        try {
+            if (dialog != null) {
+                if (dialog.isShowing() && !activity.isFinishing()) {
+                    dialog.dismiss();
+                }
+            }
+        } catch (Exception e) {
+        }
     }
 
     @Override

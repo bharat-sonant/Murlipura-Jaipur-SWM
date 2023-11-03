@@ -2,6 +2,7 @@ package com.vCare.murlipurajaipurswm.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.vCare.murlipurajaipurswm.Adapter.ComplainAdapter;
 import com.vCare.murlipurajaipurswm.Model.ComplainModel;
+import com.vCare.murlipurajaipurswm.OtpScreen;
 import com.vCare.murlipurajaipurswm.R;
 
 import java.text.ParseException;
@@ -45,6 +47,7 @@ public class ComplainPage extends Fragment {
     String date, pathRef;
     ArrayList<ComplainModel> models = new ArrayList<>();
     ComplainAdapter adapter;
+    ProgressDialog dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,21 +84,26 @@ public class ComplainPage extends Fragment {
     }
 
     private void getNewComplainList() {
+        setProgressBar("","Please Wait", getContext(),getActivity());
         getDataBase();
         ref.child("ComplaintsData").child("UserComplaintReference").child(preferences.getString("CARD NUMBER", "")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String>
-                        list = new ArrayList<String>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    date = data.getKey();
-                    list.add(date);
-                }
-                Collections.sort(list, Collections.reverseOrder());
-                for (int i = 0; i < list.size(); i++) {
-                    String dateValues = list.get(i);
-                    pathRef = snapshot.child(dateValues).getValue(String.class);
-                    showData(pathRef, dateValues);
+                if(snapshot.exists()){
+                    ArrayList<String>
+                            list = new ArrayList<String>();
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        date = data.getKey();
+                        list.add(date);
+                    }
+                    Collections.sort(list, Collections.reverseOrder());
+                    for (int i = 0; i < list.size(); i++) {
+                        String dateValues = list.get(i);
+                        pathRef = snapshot.child(dateValues).getValue(String.class);
+                        showData(pathRef, dateValues);
+                    }
+                }else {
+                    closeDialog(getActivity());
                 }
             }
 
@@ -130,6 +138,7 @@ public class ComplainPage extends Fragment {
                 adapter = new ComplainAdapter(getActivity(), models);
                 complainRV.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                closeDialog(getActivity());
             }
 
             @Override
@@ -150,6 +159,29 @@ public class ComplainPage extends Fragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setProgressBar(String title, String message, Context context, Activity activity) {
+        closeDialog(activity);
+        dialog = new ProgressDialog(context);
+        dialog.setCancelable(false);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        if (!dialog.isShowing() && !activity.isFinishing()) {
+            dialog.show();
+        }
+    }
+
+    public void closeDialog(Activity activity) {
+        try {
+            if (dialog != null) {
+                if (dialog.isShowing() && !activity.isFinishing()) {
+                    dialog.dismiss();
+                }
+            }
+        } catch (Exception e) {
         }
     }
 
