@@ -15,10 +15,12 @@ import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vCare.murlipurajaipurswm.FcmNotificationsSender;
 import com.vCare.murlipurajaipurswm.R;
 import com.vCare.murlipurajaipurswm.SplashScreen;
 
@@ -55,7 +58,8 @@ public class HomePage extends Fragment {
     FirebaseDatabase database;
     SharedPreferences preferences;
     AlertDialog.Builder ad;
-    ConstraintLayout btn_pay_history;
+    RelativeLayout btn_pay_history;
+    boolean notificationStatus = false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -79,6 +83,8 @@ public class HomePage extends Fragment {
 
         // get Driver and Helper Details
         getDetails();
+
+        getPendingPaymentMonths();
 
         // get Supervisor Contact Number
         getSupervisorContactNumber();
@@ -142,6 +148,83 @@ public class HomePage extends Fragment {
         });
 
         return view;
+
+    }
+    public void getPendingPaymentMonths() {
+        getDataBase();
+        String cardId = preferences.getString("CARD NUMBER", "");
+        ref.child("PaymentCollectionInfo/PaymentCollectionHistory/").child("" + cardId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() != null) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        String key = snapshot1.getKey();
+                        Log.e("Vcare", " KeyMonth " + key);
+                        if (key.equals("Entities")){
+                            for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                                for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
+                                    for (DataSnapshot snapshot4 : snapshot3.getChildren()) {
+                                        String status = snapshot4.child("status").getValue().toString();
+                                        if (status.equals("Pending")) {
+//                                            getToken();
+                                            notificationStatus = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                        }else {
+                            for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                                String status = snapshot2.child("status").getValue().toString();
+                                if (status.equals("Pending")) {
+//                                    getToken();
+                                    notificationStatus = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (notificationStatus){
+                        getToken();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getToken() {
+        getDataBase();
+        String card = preferences.getString("CARD NUMBER", "");
+        ref.child("CardWardMapping").child(card).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("Token")) {
+                    Log.e("data", "" + card + " " + dataSnapshot.child("Token").getValue().toString());
+                    String token = dataSnapshot.child("Token").getValue().toString();
+//                    data extra = new data("Test");
+//                    Notification notification = new Notification("कचरे वाली गाड़ी जल्द ही आपके द्वार पर पहुंचने वाली है।   कृप्या कचरा गाडी में डाले।", "body test");
+//                    new sendNotification(notification, extra, token).execute();
+                    FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "", "",
+                            getContext(), getActivity());
+                    notificationsSender.SendNotifications();
+
+                } else {
+                    Log.e("data", "There is no Token");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

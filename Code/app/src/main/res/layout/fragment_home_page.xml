@@ -251,12 +251,13 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView"
             android:visibility="gone"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:id="@+id/constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:padding="10dp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -276,6 +277,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_arrow_left_24"
+                android:layout_toRightOf="@+id/customerCare"
+                android:layout_centerInParent="true"
                 app:layout_constraintBottom_toBottomOf="@id/customerCare"
                 app:layout_constraintStart_toEndOf="@id/customerCare"
                 app:layout_constraintTop_toTopOf="@id/customerCare"
@@ -286,51 +289,52 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/backgroundstroke"
                 android:padding="10dp"
+                android:layout_toRightOf="@+id/leftArrow"
                 android:text="Customer Care"
                 android:textColor="@color/green"
                 android:textSize="15sp"
+                android:layout_centerInParent="true"
                 app:layout_constraintBottom_toBottomOf="@id/customerCare"
                 app:layout_constraintStart_toEndOf="@id/leftArrow"
                 app:layout_constraintTop_toTopOf="@id/customerCare" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_pay_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/backgroundstroke"
-            android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout">
-
-            <ImageView
-                android:id="@+id/pay_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/paymentimg"
-                app:layout_constraintBottom_toBottomOf="@id/paymentText"
-                app:layout_constraintEnd_toStartOf="@id/paymentText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/paymentText" />
-
-            <TextView
-                android:id="@+id/paymentText"
+            <RelativeLayout
+                android:id="@+id/btn_pay_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Payment"
-                android:textColor="@color/green"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginEnd="10dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/backgroundstroke"
+                android:padding="10dp">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/pay_img"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/paymentimg"
+                    app:layout_constraintBottom_toBottomOf="@id/paymentText"
+                    app:layout_constraintEnd_toStartOf="@id/paymentText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/paymentText" />
+
+                <TextView
+                    android:id="@+id/paymentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment"
+                    android:textColor="@color/green"
+                    android:textSize="15sp"
+                    android:layout_toRightOf="@+id/pay_img"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
