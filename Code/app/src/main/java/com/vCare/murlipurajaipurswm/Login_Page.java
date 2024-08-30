@@ -91,7 +91,6 @@ public class Login_Page extends AppCompatActivity {
         dialog.setMessage("Please Wait...");
         dialog.show();
         smartCardNumber = "MPZ" + cardNumber.getText().toString();
-
         ref.child("CardWardMapping/" + smartCardNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
