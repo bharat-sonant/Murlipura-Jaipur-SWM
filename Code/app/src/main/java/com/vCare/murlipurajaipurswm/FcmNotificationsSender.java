@@ -30,7 +30,6 @@ public class FcmNotificationsSender {
 
     private RequestQueue requestQueue;
     private final String postUrl = "https://fcm.googleapis.com/fcm/send";
-    private final String fcmServerKey = "AAAAWLxrVRI:APA91bE4GFtvRHlrde4wgqSzJXGdAMUfU2nif08f49yZaPiFuVXAOfCI8gFgJqpEwnHVpOIPpYwn45FBsjspPZsBzUjd6mJlpL8BXkJqp-Kv1hgiONqPDDXDbV_c_ouXZKfuSgnxsGZQ";
 
     public FcmNotificationsSender(String userFcmToken, String title, String body, Context mContext, Activity mActivity) {
         this.userFcmToken = userFcmToken;
@@ -86,7 +85,7 @@ public class FcmNotificationsSender {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> header = new HashMap<>();
                     header.put("content-Type", "application/json; UTF-8");
-                    header.put("Authorization", "key=" + fcmServerKey);
+                    header.put("Authorization", "key=AAAAWLxrVRI:APA91bE4GFtvRHlrde4wgqSzJXGdAMUfU2nif08f49yZaPiFuVXAOfCI8gFgJqpEwnHVpOIPpYwn45FBsjspPZsBzUjd6mJlpL8BXkJqp-Kv1hgiONqPDDXDbV_c_ouXZKfuSgnxsGZQ");
                     return header;
                 }
             };
